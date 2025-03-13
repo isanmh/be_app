@@ -1,0 +1,19 @@
+# install Nodemon biar bisa auto reload:
+npm i -g nodemon
+
+buat script di package.json:
+ "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+
+cara jalanin :
+npm start
+npm run dev
+
+Logging & Environment Variable:
+pnpm i dotenv morgan 
+
+install gitignore :
+npm i -g gitignore
+gitignore node
