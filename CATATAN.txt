@@ -30,16 +30,32 @@ pnpm i body-parser cors helmet compression
 
 # cara membuat migration sequelize :
 npm i --save-dev sequelize-cli
-npx sequelize-cli init
 
+# untuk membuat file migration config, migration, models, seeders :
+npx sequelize-cli init (global)
+npm run sequelize-cli init  (local)
+
+# custom path migration, models, seeders :
 buat .sequelizerc
-copy isi dari .sequelizerc
-edit databse.json > databse.js
-setting Environment Variable
-models>index.js :
-const config = require(__dirname + "/../../config/database.js")[env];
+copy isi dari .sequelizerc di documentasi sequelize
+edit file .sequelizerc, models/index.js, config/database.js : 
+  databse.json > databse.js
+setting Environment Variable di .env, database.js :
 
-migration :
+# buat model database migration menggunakan sequelize-cli :
+-- global (npx)
 npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
 
-npm run sequelize-cli model:generate --name Contact --attributes name:string,email:string,phone:string,image:string --underscored
+npx sequelize-cli model:generate --name Contact --attributes name:string,email:string,phone:string,image:string --underscored
+
+-- local (npm)
+npm run sequelize-cli -- model:generate --name Contact --attributes name:string,email:string,phone:string,image:string --underscored
+
+# migration pada sequelize :
+-- global (npx)
+npx sequelize-cli db:migrate
+
+-- local (npm)
+npm run sequelize-cli -- db:migrate
+npm run sequelize-cli -- db:migrate:undo
+npm run sequelize-cli -- db:migrate:undo:all
