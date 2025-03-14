@@ -7,4 +7,10 @@ module.exports = {
       message: "Welcome to my API!",
     });
   },
+  about: (req, res) => {
+    res.json({
+      name: "ihsan",
+      job: "student",
+    });
+  },
 };

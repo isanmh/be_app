@@ -1,5 +1,5 @@
-const express = require("express");
 const basicController = require("../controllers/basicController");
+const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -7,5 +7,6 @@ router.get("/", (req, res) => {
 });
 router.get("/basic", basicController.index);
 router.get("/home", basicController.home);
+router.get("/about", basicController.about);
 
 module.exports = router;

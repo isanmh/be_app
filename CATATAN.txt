@@ -7,13 +7,39 @@ buat script di package.json:
     "dev": "nodemon app.js"
   },
 
-cara jalanin :
+# cara jalanin :
 npm start
 npm run dev
 
-Logging & Environment Variable:
+# Logging & Environment Variable:
 pnpm i dotenv morgan 
 
 install gitignore :
 npm i -g gitignore
 gitignore node
+
+latihan :
+silahkan buat enpoint http//:localhost/about
+{
+  name: "Rizqi",
+  job: "developer"
+}
+
+# api kita butuh :
+pnpm i body-parser cors helmet compression
+
+# cara membuat migration sequelize :
+npm i --save-dev sequelize-cli
+npx sequelize-cli init
+
+buat .sequelizerc
+copy isi dari .sequelizerc
+edit databse.json > databse.js
+setting Environment Variable
+models>index.js :
+const config = require(__dirname + "/../../config/database.js")[env];
+
+migration :
+npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+npm run sequelize-cli model:generate --name Contact --attributes name:string,email:string,phone:string,image:string --underscored
