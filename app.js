@@ -21,9 +21,11 @@ app.use(morgan("dev"));
 // routes
 const basicRoute = require("./routes/basicRoute");
 const companyRoute = require("./routes/companyRoute");
+const contactsRoute = require("./routes/contactsRoute");
 
 app.use("/", basicRoute);
 app.use("/company", companyRoute);
+app.use("/api/contacts", contactsRoute);
 
 app.use((req, res) => {
   res.status(404).send("<h1>Halaman tidak ditemukan</h1>");
