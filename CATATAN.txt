@@ -59,3 +59,10 @@ npx sequelize-cli db:migrate
 npm run sequelize-cli -- db:migrate
 npm run sequelize-cli -- db:migrate:undo
 npm run sequelize-cli -- db:migrate:undo:all
+
+# 
+pnpm i express-validator multer
+
+# upload file :
+hrs buat folder 
+public/images
