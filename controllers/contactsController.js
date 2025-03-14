@@ -1,5 +1,6 @@
 const db = require("../database/models");
 const { validationResult } = require("express-validator");
+const fs = require("fs");
 
 module.exports = {
   index: (req, res) => {
@@ -44,6 +45,21 @@ module.exports = {
         status: "data berhasil ditambahkan",
         data: contact,
       });
+    }
+  },
+  async destroy(req, res) {
+    const id = req.params.id;
+    const contact = await db.Contact.findOne({ where: { id: id } });
+    if (contact) {
+      // jika image ada
+      if (contact.image !== null) {
+        const filepath = `./public/images/${contact.image}`;
+        fs.unlinkSync(filepath);
+      }
+      await contact.destroy();
+      return res.status(200).json({ status: "data berhasil dihapus" });
+    } else {
+      return res.status(404).json({ status: "data tidak ditemukan" });
     }
   },
 };

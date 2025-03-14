@@ -13,6 +13,7 @@ router.post(
   contactValidator,
   contactsController.store
 );
+router.delete("/:id", contactsController.destroy);
 
 // cek image upload
 router.post("/upload", upload.single("image"), (req, res) => {

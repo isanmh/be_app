@@ -66,3 +66,12 @@ pnpm i express-validator multer
 # upload file :
 hrs buat folder 
 public/images
+
+buat middleware :
+middleware/uploadMiddleware.js
+router.post(
+  "/",
+  upload.single("image"),
+  contactValidator,
+  contactsController.store
+);
