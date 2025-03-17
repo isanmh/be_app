@@ -1,7 +1,6 @@
 const db = require("../database/models");
 const { validationResult } = require("express-validator");
 const fs = require("fs");
-const { where } = require("sequelize");
 
 module.exports = {
   index: (req, res) => {
@@ -75,11 +74,11 @@ module.exports = {
     const contact = await db.Contact.findOne({ where: { id: id } });
     // jika data tidak ditemukan
     if (!contact) {
+      // ini untuk menghapus file image yang sudah terupload jika data tidak ditemukan
       if (req.file) {
         const filepath = `./public/images/${req.file.filename}`;
         fs.unlinkSync(filepath);
       }
-
       return res.status(404).json({
         status: "Error",
         message: "Data not found",
