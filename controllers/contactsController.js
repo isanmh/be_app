@@ -1,6 +1,7 @@
 const db = require("../database/models");
 const { validationResult } = require("express-validator");
 const fs = require("fs");
+const { where } = require("sequelize");
 
 module.exports = {
   index: (req, res) => {
@@ -11,6 +12,24 @@ module.exports = {
     const contacts = await db.Contact.findAll({
       attribut: ["id", "name", "email", "phone"],
     });
+    return res.status(200).json({
+      status: "Success",
+      data: contacts,
+    });
+  },
+
+  async show(req, res) {
+    const id = req.params.id;
+    const contacts = await db.Contact.findOne({
+      where: { id: id },
+      attribut: ["id", "name", "email", "phone"],
+    });
+    if (!contacts) {
+      return res.status(404).json({
+        status: "Error",
+        message: "Data not found",
+      });
+    }
     return res.status(200).json({
       status: "Success",
       data: contacts,
@@ -47,6 +66,55 @@ module.exports = {
       });
     }
   },
+
+  async update(req, res) {
+    const errors = validationResult(req);
+    const id = req.params.id;
+    const { name, email, phone } = req.body;
+
+    // jika ada error validation from express-validator
+    if (!errors.isEmpty()) {
+      return res.status(422).json({
+        status: "Error",
+        errors: errors.array(),
+      });
+    } else {
+      // ambil by id
+      const contact = await db.Contact.findOne({
+        where: { id: id },
+      });
+
+      // jika data tidak ditemukan
+      if (!contact) {
+        return res.status(404).json({
+          status: "Error",
+          message: "Data not found",
+        });
+      }
+
+      // jika ada image dari form
+      if (req.file) {
+        if (contact.image !== null) {
+          const filepath = `./public/images/${contact.image}`;
+          fs.unlinkSync(filepath);
+        }
+        var image = req.file.filename;
+      } else {
+        var image = contact.image;
+      }
+
+      contact.name = name;
+      contact.email = email;
+      contact.phone = phone;
+      contact.image = image;
+      await contact.save();
+
+      return res.status(200).json({
+        status: "data berhasil diupdate",
+      });
+    }
+  },
+
   async destroy(req, res) {
     const id = req.params.id;
     const contact = await db.Contact.findOne({ where: { id: id } });

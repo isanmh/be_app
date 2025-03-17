@@ -75,3 +75,38 @@ router.post(
   contactValidator,
   contactsController.store
 );
+
+
+alur route > controller > model > response
+app.js > routes > controller > model > response
+alur route > controller > model > views
+
+# tugas :
+buat endpoint http://localhost:3000/api/contacts/1
+{
+    "status": "Success",
+    "data": [
+        {
+            "id": 4,
+            "name": "fsdfsdf",
+            "email": "admin@gmail.com",
+            "phone": "08223312121",
+            "image": "1741940948232-undraw_vibe-coding_mjme.png",
+            "createdAt": "2025-03-14T08:29:08.235Z",
+            "updatedAt": "2025-03-14T08:29:08.235Z"
+        },    
+    ]
+}
+http://localhost:3000/api/contacts/99 (404)
+{
+    "message": "Company not found"
+}
+
+logic :
+- cek file dari form image ada atau tidak(middleware)
+- hash nama file image
+- cek file image dari database ada atau tidak
+- jika ada hapus file image dari folder public/images
+- simpan file image ke folder public/images
+- update 
+  contact.save()
