@@ -72,6 +72,20 @@ module.exports = {
     const id = req.params.id;
     const { name, email, phone } = req.body;
 
+    const contact = await db.Contact.findOne({ where: { id: id } });
+    // jika data tidak ditemukan
+    if (!contact) {
+      if (req.file) {
+        const filepath = `./public/images/${req.file.filename}`;
+        fs.unlinkSync(filepath);
+      }
+
+      return res.status(404).json({
+        status: "Error",
+        message: "Data not found",
+      });
+    }
+
     // jika ada error validation from express-validator
     if (!errors.isEmpty()) {
       return res.status(422).json({
@@ -79,19 +93,6 @@ module.exports = {
         errors: errors.array(),
       });
     } else {
-      // ambil by id
-      const contact = await db.Contact.findOne({
-        where: { id: id },
-      });
-
-      // jika data tidak ditemukan
-      if (!contact) {
-        return res.status(404).json({
-          status: "Error",
-          message: "Data not found",
-        });
-      }
-
       // jika ada image dari form
       if (req.file) {
         if (contact.image !== null) {
