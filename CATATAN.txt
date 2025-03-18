@@ -110,3 +110,6 @@ logic :
 - simpan file image ke folder public/images
 - update 
   contact.save()
+
+
+Static file :

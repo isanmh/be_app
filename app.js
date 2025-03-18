@@ -10,9 +10,13 @@ const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 
+// untuk mengakses file statis
+app.use(express.static("public"));
+// http://localhost:5000/images/1742180861006-logo.png
+
 // Middleware untuk menampilkan log request
 app.use(cors());
-app.use(helmet());
+// app.use(helmet());
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -22,6 +26,7 @@ app.use(morgan("dev"));
 const basicRoute = require("./routes/basicRoute");
 const companyRoute = require("./routes/companyRoute");
 const contactsRoute = require("./routes/contactsRoute");
+const { crossOriginResourcePolicy } = require("helmet");
 
 app.use("/", basicRoute);
 app.use("/company", companyRoute);
