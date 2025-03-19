@@ -72,7 +72,7 @@ module.exports = {
     const { name, email, phone } = req.body;
 
     const contact = await db.Contact.findOne({ where: { id: id } });
-    // jika data tidak ditemukan
+    // jika data tidak ditemukan 404
     if (!contact) {
       // ini untuk menghapus file image yang sudah terupload jika data tidak ditemukan
       if (req.file) {
@@ -85,8 +85,12 @@ module.exports = {
       });
     }
 
-    // jika ada error validation from express-validator
+    // jika ada error validation from express-validator user (422)
     if (!errors.isEmpty()) {
+      if (req.file) {
+        const filepath = `./public/images/${req.file.filename}`;
+        fs.unlinkSync(filepath);
+      }
       return res.status(422).json({
         status: "Error",
         errors: errors.array(),

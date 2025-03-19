@@ -26,7 +26,6 @@ app.use(morgan("dev"));
 const basicRoute = require("./routes/basicRoute");
 const companyRoute = require("./routes/companyRoute");
 const contactsRoute = require("./routes/contactsRoute");
-const { crossOriginResourcePolicy } = require("helmet");
 
 app.use("/", basicRoute);
 app.use("/company", companyRoute);
