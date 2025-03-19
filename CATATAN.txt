@@ -113,3 +113,9 @@ logic :
 
 
 Static file :
+
+if tenary 
+
+isi ? true : false
+
+isi && true
